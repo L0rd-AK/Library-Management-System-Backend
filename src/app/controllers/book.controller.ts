@@ -1,11 +1,24 @@
 import { Request, Response } from 'express';
 import { Book } from '../modelss/book.model';
 import { Genre } from '../interfaces/book.interface';
+import { z } from 'zod';
 
+//zod validation
+const BookZodvalidation = z.object({
+  title: z.string({ invalid_type_error: 'Title must be a string' }).min(1, 'Title is required'),
+  author: z.string({ invalid_type_error: 'Author must be a string' }).min(1, 'Author is required'),
+  genre: z.nativeEnum(Genre, {
+    message: 'Invalid genre',
+  }),
+  isbn: z.string({ invalid_type_error: 'ISBN must be a string' }).min(1, 'ISBN is required'),
+  description: z.string({ invalid_type_error: 'Description must be a string' }).optional(),
+  copies: z.number({ invalid_type_error: 'Copies must be a number' }).min(0, 'Copies must be a positive number'),
+  available: z.boolean({ invalid_type_error: 'Available must be a boolean' }).optional(),
+}); 
 // Create a new book
 export const createBook = async (req: Request, res: Response) => {
   try {
-    const book = await Book.create(req.body);
+    const book = await BookZodvalidation.parseAsync(req.body);
     res.status(201).json({
       success: true,
       message: 'Book created successfully',
@@ -117,7 +130,7 @@ export const getAllBooks = async (req: Request, res: Response) => {
   // Get a single book by ID
 export const getBookById = async (req: Request, res: Response) => {
     try {
-      const book = await Book.findById(req.params.bookId); // Changed from id to bookId
+      const book = await Book.findById(req.params.bookId); 
       
       if (!book) {
         return res.status(404).json({

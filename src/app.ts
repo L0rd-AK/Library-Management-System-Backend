@@ -11,8 +11,7 @@ app.use(cors());
 
 // Routes
 app.use('/api/books', bookRoutes);
-app.use('/api/borrow', borrowRoutes); // Changed from '/api/borrows' to '/api/borrow'
-
+app.use('/api/borrow', borrowRoutes);
 app.get('/', (req: Request, res: Response) => {
     res.send('Welcome to Amits Library Management System');
 });
