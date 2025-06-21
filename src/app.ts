@@ -1,7 +1,7 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
-import bookRoutes from './routes/book.routes';
-import borrowRoutes from './routes/borrow.routes';
+import bookRoutes from './app/routes/book.routes';
+import borrowRoutes from './app/routes/borrow.routes';
 
 const app: Application = express();
 
