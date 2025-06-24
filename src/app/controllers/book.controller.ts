@@ -15,10 +15,13 @@ const BookZodvalidation = z.object({
   copies: z.number({ invalid_type_error: 'Copies must be a number' }).min(0, 'Copies must be a positive number'),
   available: z.boolean({ invalid_type_error: 'Available must be a boolean' }).optional(),
 }); 
-// Create a new book
+// Create a new bookk
 export const createBook = async (req: Request, res: Response) => {
   try {
-    const book = await BookZodvalidation.parseAsync(req.body);
+    console.log("hit createBook endpoint");
+    const zodbook = await BookZodvalidation.parseAsync(req.body);
+    const book = await Book.create(zodbook);
+    console.log(book);
     res.status(201).json({
       success: true,
       message: 'Book created successfully',

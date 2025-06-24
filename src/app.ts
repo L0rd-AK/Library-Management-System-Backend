@@ -16,7 +16,7 @@ app.get('/', (req: Request, res: Response) => {
     res.send('Welcome to Amits Library Management System');
 });
 
-// Global error handler
+// Global error handler=
 app.use((err: any, req: Request, res: Response, next: any) => {
     res.status(err.status || 500).json({
         message: err.message || 'Something went wrong',

@@ -48,7 +48,18 @@ const bookSchema = new Schema<IBook, BookModel>(
       transform: function (doc, ret) {
         delete ret.__v;
         delete ret.id;
-        return ret;
+        return {
+          _id: ret._id,
+          title: ret.title,
+          author: ret.author,
+          genre: ret.genre,
+          isbn: ret.isbn,
+          description: ret.description || '',
+          copies: ret.copies,
+          available: ret.available,
+          createdAt: ret.createdAt,
+          updatedAt: ret.updatedAt
+        };
       },
     },
   }
